@@ -2,6 +2,7 @@ import { User } from "../Models/User.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { verifyEmail } from "../Services/Email/Verify.Email.js";
+import { Session } from "../Models/Session.model.js";
 
 export const register = async (req, res) => {
   try {
@@ -94,31 +95,127 @@ export const Verify = async (req, res) => {
   }
 };
 
-
-export const reVerify = async (req,res)=>{
-
+export const reVerify = async (req, res) => {
   try {
-    const {email}=req.body
-    const user =await User.findOne({email})
+    const { email } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
-        success:false,
-        message:"User not found"
-      })
+        success: false,
+        message: "User not found",
+      });
     }
-    const token = jwt.sign({id: user._id},process.env.SECRET_KEY,{expiresIn:'10m'})
-    verifyEmail(token,email)
-    user.token=token
-    await user.save()
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
+      expiresIn: "10m",
+    });
+    verifyEmail(token, email);
+    user.token = token;
+    await user.save();
     return res.status(200).json({
-      success:true,
-      message:"Verification email sent again successfully",
-      token:user.token
-    })
+      success: true,
+      message: "Verification email sent again successfully",
+      token: user.token,
+    });
   } catch (error) {
     return res.status(500).json({
-      success:false,
-      message:error.message
-    })
+      success: false,
+      message: error.message,
+    });
   }
-}
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "all fields are required",
+      });
+    }
+    const exisitingUser = await User.findOne({ email });
+    if (!exisitingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User not exists",
+      });
+    }
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      exisitingUser.password,
+    );
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        success: false,
+        message: "invalid credentials",
+      });
+    }
+
+    if (exisitingUser.isVerified === false) {
+      return res.status(400).json({
+        success: false,
+        message: "verify your account then login",
+      });
+    }
+
+    // genrate token
+    
+    const accessToken = jwt.sign(
+      { id: exisitingUser._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "10d" },
+    );
+    
+    const refreshToken = jwt.sign(
+      { id: exisitingUser._id },
+      process.env.SECRET_KEY,
+      { expiresIn: "30d" },
+    );
+
+    exisitingUser.isLoggedIn = true;
+    await exisitingUser.save();
+
+    // check for exisiting session or delete
+    const existingSession = await Session.findOne({
+      userId: exisitingUser._id,
+    });
+    if (existingSession) {
+      await Session.deleteOne({ userId: exisitingUser._id });
+    }
+
+    // create  new session
+    await Session.create({ userId: exisitingUser._id });
+    return res.status(200).json({
+      success: true,
+      message: `welcome back ${exisitingUser.firstName}`,
+      user: exisitingUser,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
+export const logout = async (req, res) => {
+  try {
+    const userId = req.id;
+    await Session.deleteMany({ userId: userId });
+    await User.findByIdAndUpdate(userId, { isLoggedIn: false });
+    return res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
