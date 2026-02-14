@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { verifyEmail } from "../Services/Email/Verify.Email.js";
 import { Session } from "../Models/Session.model.js";
+import { SendOTPmail } from "../Services/Email/Send.OTP.Mail.js";
 
 export const register = async (req, res) => {
   try {
@@ -159,13 +160,13 @@ export const login = async (req, res) => {
     }
 
     // genrate token
-    
+
     const accessToken = jwt.sign(
       { id: exisitingUser._id },
       process.env.SECRET_KEY,
       { expiresIn: "10d" },
     );
-    
+
     const refreshToken = jwt.sign(
       { id: exisitingUser._id },
       process.env.SECRET_KEY,
@@ -200,7 +201,6 @@ export const login = async (req, res) => {
   }
 };
 
-
 export const logout = async (req, res) => {
   try {
     const userId = req.id;
@@ -218,4 +218,122 @@ export const logout = async (req, res) => {
   }
 };
 
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+
+    user.otp = otp;
+    user.otpExpiry = otpExpiry;
+
+    await user.save();
+    await SendOTPmail(otp, email);
+
+    return res.status(200).json({
+      sucess: true,
+      message: "Otp sent to email sucessfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
+  }
+};
+
+export const VerifyOTP = async (req, res) => {
+  try {
+    const { otp } = req.body;
+    const email = req.params.email;
+    if (!otp) {
+      return res.status(400).json({
+        success: false,
+        message: "Otp is required",
+      });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    if (!user.otp || !user.otpExpiry) {
+      return res.status(400).json({
+        success: false,
+        message: "otp is not genrated or already verified",
+      });
+    }
+    if (user.otpExpiry < new Date()) {
+      return res.status(400).json({
+        success: false,
+        message: "otp has expired please request a new one",
+      });
+    }
+    if (otp !== user.otp) {
+      return res.status(400).json({
+        success: false,
+        message: "otp is invalid",
+      });
+    }
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      message: "otp verified successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      sucess: false,
+      message: error.message,
+    });
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { newPassword, confirmPassword } = req.body;
+    const { email } = req.params;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: "false",
+        message: "User not found",
+      });
+    }
+    if (!newPassword || !confirmPassword) {
+      return res.status(400).json({
+        sucess: false,
+        message: "All fields are required",
+      });
+    }
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success:false,
+        message:"Password do not match"
+      })
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+    return res.status(200).json({
+      sucess: true,
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
