@@ -319,9 +319,9 @@ export const changePassword = async (req, res) => {
     }
     if (newPassword !== confirmPassword) {
       return res.status(400).json({
-        success:false,
-        message:"Password do not match"
-      })
+        success: false,
+        message: "Password do not match",
+      });
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
@@ -331,6 +331,44 @@ export const changePassword = async (req, res) => {
       message: "Password changed successfully",
     });
   } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const allUser = async (_, res) => {
+  try {
+    const users = await User.find();
+    return res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params; // extract userid from req params
+    const user = await User.findById(userId).select(
+      "-password -otpExpiry -token",
+    );
+    if (!user) {
+      return res.status(404).json({
+        success: "User not found",
+      });
+    }
+    res.status(200).json({
+      success:false,
+      message:user,
+    })
+    } catch (error) {
     return res.status(500).json({
       success: false,
       message: error.message,
