@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { verifyEmail } from "../Services/Email/Verify.Email.js";
 import { Session } from "../Models/Session.model.js";
 import { SendOTPmail } from "../Services/Email/Send.OTP.Mail.js";
+import cloudinary from "../Utils/cloudinary.js";
+import { resolveContent } from "nodemailer/lib/shared/index.js";
 
 export const register = async (req, res) => {
   try {
@@ -143,7 +145,7 @@ export const login = async (req, res) => {
     }
     const isPasswordValid = await bcrypt.compare(
       password,
-      exisitingUser.password,
+      exisitingUser.password
     );
     if (!isPasswordValid) {
       return res.status(400).json({
@@ -164,13 +166,13 @@ export const login = async (req, res) => {
     const accessToken = jwt.sign(
       { id: exisitingUser._id },
       process.env.SECRET_KEY,
-      { expiresIn: "10d" },
+      { expiresIn: "10d" }
     );
 
     const refreshToken = jwt.sign(
       { id: exisitingUser._id },
       process.env.SECRET_KEY,
-      { expiresIn: "30d" },
+      { expiresIn: "30d" }
     );
 
     exisitingUser.isLoggedIn = true;
@@ -336,7 +338,7 @@ export const changePassword = async (req, res) => {
       message: error.message,
     });
   }
-};
+};          
 
 export const allUser = async (_, res) => {
   try {
@@ -357,7 +359,7 @@ export const getUserById = async (req, res) => {
   try {
     const { userId } = req.params; // extract userid from req params
     const user = await User.findById(userId).select(
-      "-password -otpExpiry -token",
+      "-password -otpExpiry -token"
     );
     if (!user) {
       return res.status(404).json({
@@ -365,13 +367,84 @@ export const getUserById = async (req, res) => {
       });
     }
     res.status(200).json({
-      success:false,
-      message:user,
-    })
-    } catch (error) {
+      success: false,
+      message: user,
+    });
+  } catch (error) {
     return res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const userIdToUpdate = req.params.id;
+    const loggedInUser = req.user;
+    const { firstName, lastName, address, city, zipCode, phoneNo, role } =
+      req.body;
+
+    if (
+      loggedInUser._id.toString() !== userIdToUpdate &&
+      loggedInUser.role !== "admin"
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to update this profile",
+      });
+    }
+    let user = await User.findById(userIdToUpdate);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    let profilePicUrl = user.profilePic;
+    let profilePicPublicId = user.profilePicPublicId;
+
+    // if  a new file is upload
+    if (req.file) {
+      if (profilePicPublicId) {
+        await cloudinary.uploader.destroy(profilePicPublicId);
+      }
+
+      const uploadResult = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "profiles" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        stream.end(req.file.buffer);
+      });
+      profilePicUrl = uploadResult.secure_url;
+      profilePicPublicId = uploadResult.public_id;
+    }
+    // update fields
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    user.address = address || user.address;
+    user.city = city || user.city;
+    user.zipCode = zipCode || user.zipCode;
+    user.phoneNo = phoneNo || user.phoneNo;
+    user.role = role;
+    user.profilePic = profilePicUrl;
+    user.profilePicPublicId = profilePicPublicId;
+
+    const updateUser = await user.save()
+    return res.status(200).json({
+      success:true,
+      message:"Profie Update Successfully",
+      user:updateUser,
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+  
