@@ -29,7 +29,10 @@
 //   });
 // };
 
+
+
 import nodemailer from "nodemailer";
+
 import "dotenv/config";
 
 export const verifyEmail = async (token, email) => {

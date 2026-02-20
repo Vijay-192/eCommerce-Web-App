@@ -6,6 +6,8 @@ import SignIn from "./components/auth/SignIn";
 import Verify from "./components/pages/Verify";
 import VerifyEmail from "./components/pages/VerifyEmail";
 import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Profile from "./components/pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +15,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-        <Home />,
+        <Home />,<Footer />
       </>
     ),
   },
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
   { path: "/signup", element: <SignUp /> },
   { path: "/signin", element: <SignIn /> },
   { path: "/verify", element: <Verify /> },
+  { path: "/profile", element:<><Navbar/> <Profile />  </>},
   { path: "/verify-email/:token", element: <VerifyEmail /> },
 ]);
 

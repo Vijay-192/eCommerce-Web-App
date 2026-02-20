@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { loginUser, resetState } from "../redux/authSlice";
+import { loginUser, resetState } from "../redux/userSlice";
 
 export const useLogin = () => {
   const navigate = useNavigate();

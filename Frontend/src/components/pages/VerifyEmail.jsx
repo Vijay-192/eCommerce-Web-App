@@ -1,43 +1,3 @@
-// import React, { use } from 'react'
-// import { useNavigate, useParams } from "react-router-dom";
-// import axios from "axios";
-// function VerifyEmail() {
-// const navigate = useNavigate();
-//     const {token} = useParams();
-//     const [status, setStatus] = React.useState("Verifying...");
-//     const verifyEmail = async () => {
-//         try {
-//             const res = await axios.post(`http://localhost:5000/api/v1/user/verify/`,{},{
-//                 headers: {
-//                     Authorization : `Bearer ${token}`,
-//                 },
-//             });
-//             if (res.data.success) {
-//                 setStatus("Email verified successfully!");
-//                 setTimeout(() => {
-//                     navigate("/signin");
-//                 }, 2000);
-//             }
-            
-//         } catch (error) {
-//    console.log(error);
-//    setStatus("Verification failed. Please try again.");
-   
-//         }
-//     };
-
-//  useEffect(() => {
-//     verifyEmail();
-//   }, [token]);
-
-//   return (
-//     <div>{status}</div>
-//   )
-// }
-
-// export default VerifyEmail
-
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -47,7 +7,7 @@ function VerifyEmail() {
   const navigate = useNavigate();
   const { token } = useParams();
 
-  const [status, setStatus] = useState("verifying"); 
+  const [status, setStatus] = useState("verifying");
   const [message, setMessage] = useState("Verifying your email...");
 
   const verifyEmail = async () => {
@@ -66,7 +26,7 @@ function VerifyEmail() {
         setStatus("success");
         setMessage("Email verified successfully!");
         setTimeout(() => {
-          navigate("/signin");
+          navigate("/");
         }, 2000);
       }
     } catch (error) {
@@ -85,13 +45,12 @@ function VerifyEmail() {
     status === "success"
       ? "bg-green-300"
       : status === "error"
-      ? "bg-red-300"
-      : "bg-blue-200";
+        ? "bg-red-300"
+        : "bg-blue-200";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-yellow-300 p-4">
       <div className="w-full max-w-md bg-white border-4 border-black shadow-[8px_8px_0px_black] p-8 text-center">
-
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className="bg-white border-4 border-black p-4 shadow-[4px_4px_0px_black]">
@@ -110,9 +69,6 @@ function VerifyEmail() {
         >
           {message}
         </p>
-
-  
-        
       </div>
     </div>
   );

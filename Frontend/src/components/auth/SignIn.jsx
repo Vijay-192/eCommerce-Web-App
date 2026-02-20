@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -6,14 +5,62 @@ import { Loader } from "../retroui/Loader";
 import { Input } from "../retroui/Input";
 import { Label } from "../retroui/Label";
 import { Button } from "../retroui/Button";
-import { useLogin } from "@/hooks/useLogin";
+
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/userSlice";
 function SignIn() {
-  const { formData, handleChange, submitHandler, loading } = useLogin();
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const [showPassword, seShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const submitHandler = async e => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `
+        ${API_BASE_URL}/login`,
+
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data.success) {
+        navigate("/");
+        dispatch(setUser(res.data.user));
+        localStorage.setItem("accessToken", res.data.accessToken);
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center auth-bg">
+    <div className="min-h-screen flex items-center justify-center bg-[#C4D96F]">
       <div className="bg-gray-200 border-4 border-black p-8 w-full max-w-md relative shadow-md">
         <div className="absolute bottom-[-10px] left-2 w-full h-full bg-black -z-10"></div>
 
@@ -59,7 +106,7 @@ function SignIn() {
 
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => seShowPassword(!showPassword)}
                 className="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2 
                      border-2 border-black bg-white 
                      p-1.5 shadow-[3px_3px_0px_black] 
@@ -77,7 +124,7 @@ function SignIn() {
           </Button>
 
           <p className="text-center mt-3 text-gray-700 text-sm">
-            Already have an account?{" "}
+            Don't hava an account?{" "}
             <span
               className="underline cursor-pointer font-medium"
               onClick={() => navigate("/signup")}

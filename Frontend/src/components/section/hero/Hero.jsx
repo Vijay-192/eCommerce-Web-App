@@ -53,7 +53,8 @@ const HeroSection = () => {
         {/* Bottom Testimonial */}
         <div className="max-w-sm text-black text-sm pl-15 ">
           <p className="mb-6">
-            <img src={SunSvg} alt="Sun Icon" className="w-6 h-6 inline mr-2" />
+            <img src={SunSvg} alt="Sun Icon" className="w-6 h-6 inline mr-2 animate-spin [animation-duration:4s]  " />
+             
             Very good product as expected the fabric is very soft and item is
             value for money loved it. For it and the colour is so awesome
           </p>
@@ -107,6 +108,7 @@ const HeroSection = () => {
         </div>
       </div>
     </section>
+    
   );
 };
 
