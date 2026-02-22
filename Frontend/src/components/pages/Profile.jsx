@@ -141,9 +141,9 @@ function Profile() {
   const currentPic = getProfilePic(user);
 
   return (
-    <div className="min-h-screen w-full flex bg-gray-100">
+    <div className="min-h-screen w-full flex bg-[#C4D96F]">
       {/* ================= SIDEBAR ================= */}
-      <div className="w-72 border-r-4 border-black flex flex-col py-6 px-5 bg-white">
+      <div className="w-72 border-r-4 border-black flex flex-col py-6 px-5 bg-[#F59A3D]">
         <div className="flex flex-col items-center py-8 gap-3">
           <div className="w-24 h-24 rounded-full border-4 border-black bg-gray-200 overflow-hidden flex items-center justify-center">
             {isImageUrl(currentPic) ? (
@@ -169,7 +169,7 @@ function Profile() {
             {user?.firstName || "First"} {user?.lastName || "Last"}
           </p>
           {user?.city && (
-            <p className="text-sm text-gray-500 flex items-center gap-1">
+            <p className="text-sm text-black font-bold flex items-center gap-1">
               <FiMapPin size={13} /> {user.city}
             </p>
           )}

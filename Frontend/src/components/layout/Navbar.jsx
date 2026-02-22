@@ -15,15 +15,15 @@ function Navbar() {
 
   const { user } = useSelector(store => store.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   const [loading, setLoading] = useState(false);
+
   const handleLogout = async () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        `
-        ${API_BASE_URL}/logout
-        `,
+        `${API_BASE_URL}/logout`,
         {},
         {
           headers: {
@@ -33,15 +33,19 @@ function Navbar() {
       );
       if (res.data.success) {
         dispatch(setUser(null));
+        localStorage.removeItem("accessToken");
         toast.success(res.data.message);
+        navigate("/signin");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Logout failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-
+  // Navbar.jsx mein temporarily add karo
+  console.log(user);
   return (
     <nav className="w-full h-16 flex border-b-3 border-black">
       {/* LEFT SIDE */}
@@ -97,7 +101,7 @@ function Navbar() {
           </Tooltip>
         </Tooltip.Provider>
 
-        {/* Profile */}
+        {/* Profile Avatar - only when logged in */}
         {user && (
           <Link to="/profile">
             <Tooltip.Provider>
@@ -105,15 +109,13 @@ function Navbar() {
                 <Tooltip.Trigger asChild>
                   <Avatar className="w-9 h-9 border-2 border-black bg-white rounded-none shadow-[4px_4px_0px_#000] hover:shadow-none transition-all">
                     <Avatar.Image
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                      src={user.profilePic} // ✅ Dynamic image
                       alt="User Avatar"
                       className="object-cover rounded-none"
                     />
-                    {/* {user.profile} */}
-                    {/* <Avatar.Fallback className="font-bold">AH</Avatar.Fallback> */}
                   </Avatar>
                 </Tooltip.Trigger>
-                <Tooltip.Content> {user.firstName}</Tooltip.Content>
+                <Tooltip.Content>{user.firstName}</Tooltip.Content>
               </Tooltip>
             </Tooltip.Provider>
           </Link>

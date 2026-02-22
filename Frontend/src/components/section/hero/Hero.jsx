@@ -1,18 +1,18 @@
-// import React from "react";
 import React, { useState, useEffect } from "react";
 import WinterCircle from "./WinterCircle";
 import SunSvg from "../../../assets/svg/sun.svg";
 import ArrowSvg from "../../../assets/svg/arrow.svg";
 import Carousel from "./Carousel";
 import DotIndicator from "./DotIndicator";
-
 import img from "../../../assets/jacket.png";
 import img2 from "../../../assets/iphone-17.png";
 import img4 from "../../../assets/iphone-17-hero.png";
 import img5 from "../../../assets/optimized.png";
+import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
   const items = [img, img2, img4, img5];
   const [current, setCurrent] = useState(0);
+  const navigate = useNavigate();
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent(prev => (prev + 1) % items.length);
@@ -40,6 +40,7 @@ const HeroSection = () => {
             className="w-29 h-26 inline mr-2 transform rotate-40"
           />
           <button
+            onClick={() => navigate("/signup")}
             className="mt-10 bg-[#B9D35B] px-10 py-3 
                              font-BRODISH-demo leading-[1.2] tracking-[1.5px] cursor-pointer border-2 border-black
                              shadow-[6px_6px_0px_black]
@@ -53,8 +54,11 @@ const HeroSection = () => {
         {/* Bottom Testimonial */}
         <div className="max-w-sm text-black text-sm pl-15 ">
           <p className="mb-6">
-            <img src={SunSvg} alt="Sun Icon" className="w-6 h-6 inline mr-2 animate-spin [animation-duration:4s]  " />
-             
+            <img
+              src={SunSvg}
+              alt="Sun Icon"
+              className="w-6 h-6 inline mr-2 animate-spin [animation-duration:4s]  "
+            />
             Very good product as expected the fabric is very soft and item is
             value for money loved it. For it and the colour is so awesome
           </p>
@@ -84,15 +88,6 @@ const HeroSection = () => {
           <Carousel className="z-10 absolute -left-[10%]" />
         </div>
 
-        {/* 2027 Badge */}
-        {/* <div className="z-10 mr-20 flex items-center justify-center">
-          <WinterCircle />
-            <DotIndicator
-        total={items.length}
-        current={current}
-        onSelect={setCurrent}
-      />
-        </div> */}
         <div className="relative z-10 mr-20 flex items-center justify-center">
           {/* Badge */}
           <WinterCircle />
@@ -108,7 +103,6 @@ const HeroSection = () => {
         </div>
       </div>
     </section>
-    
   );
 };
 

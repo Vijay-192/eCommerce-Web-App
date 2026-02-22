@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import ConnectDatabase from "./Database/db.js";
 import userRoute from "./Routes/User.routes.js";
+import productRoute from "./Routes/Product.routes.js"
 import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/product",productRoute );
 
 //     http://localhost:5000/api/v1/user/register
 app.listen(PORT, () => {
