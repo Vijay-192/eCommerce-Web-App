@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 function SignUp() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);

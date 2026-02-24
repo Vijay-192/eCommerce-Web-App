@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
 
 function Navbar() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
+  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
 
   const { user } = useSelector(store => store.user);
   const dispatch = useDispatch();
@@ -47,9 +47,10 @@ function Navbar() {
   // Navbar.jsx mein temporarily add karo
   console.log(user);
   return (
-    <nav className="w-full h-16 flex border-b-3 border-black">
+  <div className="split-bg">
+      <nav className="w-full h-16 flex border-b-3 border-black ">
       {/* LEFT SIDE */}
-      <div className="w-1/2 bg-[#F59A3D] flex items-center justify-between px-8">
+      <div className="w-1/2 flex items-center justify-between px-8">
         {/* Logo */}
         <h1 className="text-xl font-semibold tracking-wide">Fashono</h1>
 
@@ -85,7 +86,7 @@ function Navbar() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="w-1/2 bg-[#C4D96F] flex items-center justify-end gap-6 px-8">
+      <div className="w-1/2  flex items-center justify-end gap-6 px-8">
         {/* Search */}
         <Tooltip.Provider>
           <Tooltip>
@@ -109,7 +110,7 @@ function Navbar() {
                 <Tooltip.Trigger asChild>
                   <Avatar className="w-9 h-9 border-2 border-black bg-white rounded-none shadow-[4px_4px_0px_#000] hover:shadow-none transition-all">
                     <Avatar.Image
-                      src={user.profilePic} // ✅ Dynamic image
+                      src={user.profilePic} 
                       alt="User Avatar"
                       className="object-cover rounded-none"
                     />
@@ -170,6 +171,7 @@ function Navbar() {
         )}
       </div>
     </nav>
+  </div>
   );
 }
 

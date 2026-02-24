@@ -8,6 +8,8 @@ import VerifyEmail from "./components/pages/VerifyEmail";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Profile from "./components/pages/Profile";
+import Product from "./components/section/Product_Category_Collection/Product";
+import ShopingCart from "./components/section/ShopingCart/ShopingCart";
 
 const router = createBrowserRouter([
   {
@@ -23,8 +25,36 @@ const router = createBrowserRouter([
   { path: "/signup", element: <SignUp /> },
   { path: "/signin", element: <SignIn /> },
   { path: "/verify", element: <Verify /> },
-  { path: "/profile", element:<><Navbar/> <Profile />  </>},
+  {
+    path: "/profile",
+    element: (
+      <>
+        <Navbar /> <Profile />{" "}
+      </>
+    ),
+  },
   { path: "/verify-email/:token", element: <VerifyEmail /> },
+
+  {
+    path: "/collection",
+    element: (
+      <>
+        <Navbar />
+
+        <Product />
+      </>
+    ),
+  },
+    {
+    path: "/shoping-cart",
+    element: (
+      <>
+        <Navbar />
+
+        <ShopingCart />
+      </>
+    ),
+  },
 ]);
 
 function App() {
