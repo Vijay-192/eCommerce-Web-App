@@ -71,23 +71,24 @@ function Product() {
   }, []);
 
   return (
-    <div className="flex gap-6 p-7 min-h-screen split-bg">
-      <div className="fixed top- right-6 z-50 w-[220px] group">
-        <div
-          className="bg-white border-2 border-black rounded-[18px] 
+    <>
+      <div className="flex gap-6 p-7 h-[70vh] split-bg">
+        <div className="fixed top- right-6 z-50 w-[220px] group">
+          <div
+            className="bg-white border-2 border-black rounded-[18px] 
                 shadow-[5px_5px_0px_0px_black] 
                 px-4 py-2.5 font-semibold cursor-pointer 
                 flex justify-between items-center"
-        >
-          <span className="truncate">Sort by Price</span>
+          >
+            <span className="truncate">Sort by Price</span>
 
-          <span className="text-xs transition-transform duration-200 group-hover:rotate-180">
-            <FiChevronDown className="w-4 h-4" />
-          </span>
-        </div>
+            <span className="text-xs transition-transform duration-200 group-hover:rotate-180">
+              <FiChevronDown className="w-4 h-4" />
+            </span>
+          </div>
 
-        <div
-          className="absolute right-0 mt-2 w-full 
+          <div
+            className="absolute right-0 mt-2 w-full 
                 bg-white border-2 border-black 
                 rounded-[18px] shadow-[5px_5px_0px_0px_black] 
                 overflow-hidden flex flex-col
@@ -95,135 +96,65 @@ function Product() {
                 group-hover:opacity-100 
                 group-hover:visible
                 transition-all duration-200"
-        >
-          <div
-            className="sticky top-0 z-10 bg-white px-4 pt-3 pb-2 
+          >
+            <div
+              className="sticky top-0 z-10 bg-white px-4 pt-3 pb-2 
                   text-[10px] font-black text-gray-400 
                   uppercase tracking-widest 
                   border-b border-gray-200"
-          >
-            Sort Options
-          </div>
+            >
+              Sort Options
+            </div>
 
-          <div className="max-h-40 overflow-y-auto">
-            <div
-              onClick={() => setSortOrder("lowToHigh")}
-              className="px-4 py-2.5 text-sm font-semibold 
+            <div className="max-h-40 overflow-y-auto">
+              <div
+                onClick={() => setSortOrder("lowToHigh")}
+                className="px-4 py-2.5 text-sm font-semibold 
                  cursor-pointer border-b border-gray-100 
                  hover:bg-yellow-100 text-gray-700"
-            >
-              Price: Low to High
-            </div>
+              >
+                Price: Low to High
+              </div>
 
-            <div
-              onClick={() => setSortOrder("highToLow")}
-              className="px-4 py-2.5 text-sm font-semibold 
+              <div
+                onClick={() => setSortOrder("highToLow")}
+                className="px-4 py-2.5 text-sm font-semibold 
                  cursor-pointer hover:bg-yellow-100 
                  text-gray-700"
-            >
-              Price: High to Low
+              >
+                Price: High to Low
+              </div>
             </div>
           </div>
         </div>
+
+        <aside className="w-64 flex-shrink-0 self-start sticky mt-14 fixed">
+          <FilterSidebar
+            search={search}
+            setSearch={setSearch}
+            brand={brand}
+            setBrand={setBrand}
+            category={category}
+            setCategory={setCategory}
+            allProducts={allProducts}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+          />
+        </aside>
+
+        <main className="flex-1 min-w-0 mt-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.map(product => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                loading={loading}
+              />
+            ))}
+          </div>
+        </main>
       </div>
-
-      <aside className="w-64 flex-shrink-0 self-start sticky mt-14 f">
-        <FilterSidebar
-          search={search}
-          setSearch={setSearch}
-          brand={brand}
-          setBrand={setBrand}
-          category={category}
-          setCategory={setCategory}
-          allProducts={allProducts}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-        />
-      </aside>
-
-      <main className="flex-1 min-w-0 mt-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map(product => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              loading={loading}
-            />
-          ))}
-        </div>
-      </main>
-    </div>
-
-    //     <div className=" flex h-screen split-bg overflow-hidden">
-
-    //   <aside className="w-64 flex-shrink-0   p-6">
-    //     <FilterSidebar
-    //       search={search}
-    //       setSearch={setSearch}
-    //       brand={brand}
-    //       setBrand={setBrand}
-    //       category={category}
-    //       setCategory={setCategory}
-    //       allProducts={allProducts}
-    //       priceRange={priceRange}
-    //       setPriceRange={setPriceRange}
-    //     />
-    //   </aside>
-
-    //   <div className="flex-1 flex flex-col">
-
-    //     <div className="p-3 flex justify-end">
-    //       <div className="relative w-[220px] group">
-    //         <div
-    //           className="bg-white border-2 border-black rounded-[18px]
-    //           shadow-[5px_5px_0px_0px_black]
-    //           px-4 py-2.5 font-semibold cursor-pointer
-    //           flex justify-between items-center"
-    //         >
-    //           <span>Sort by Price</span>
-    //           <FiChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-    //         </div>
-
-    //         <div
-    //           className="absolute right-0 mt-2 w-full
-    //           bg-white border-2 border-black
-    //           rounded-[18px] shadow-[5px_5px_0px_0px_black]
-    //           opacity-0 invisible
-    //           group-hover:opacity-100
-    //           group-hover:visible
-    //           transition-all duration-200"
-    //         >
-    //           <div
-    //             onClick={() => setSortOrder("lowToHigh")}
-    //             className="px-4 py-2.5 text-sm font-semibold hover:bg-yellow-100 cursor-pointer"
-    //           >
-    //             Price: Low to High
-    //           </div>
-
-    //           <div
-    //             onClick={() => setSortOrder("highToLow")}
-    //             className="px-4 py-2.5 text-sm font-semibold hover:bg-yellow-100 cursor-pointer"
-    //           >
-    //             Price: High to Low
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     <div className="flex-1 overflow-y-auto-hide p-15">
-    //       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    //         {products.map(product => (
-    //           <ProductCard
-    //             key={product._id}
-    //             product={product}
-    //             loading={loading}
-    //           />
-    //         ))}
-    //       </div>
-    //     </div>
-
-    //   </div>
-    // </div>
+    </>
   );
 }
 

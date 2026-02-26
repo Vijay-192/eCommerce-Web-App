@@ -14,6 +14,7 @@ function Navbar() {
   const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
 
   const { user } = useSelector(store => store.user);
+  const {cart} = useSelector(store=>store.product)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
@@ -44,8 +45,8 @@ function Navbar() {
       setLoading(false);
     }
   };
-  // Navbar.jsx mein temporarily add karo
-  console.log(user);
+
+  
   return (
   <div className="split-bg">
       <nav className="w-full h-16 flex border-b-3 border-black ">
@@ -132,7 +133,7 @@ function Navbar() {
                   className="relative p-2 border border-black bg-white"
                 >
                   <span className="absolute -top-1 -left-1 bg-black text-white text-[11px] px-1 rounded-full flex items-center justify-center">
-                    1
+                    {cart?.items?.length || 0}
                   </span>
                   <ShoppingBag size={18} />
                 </Button>

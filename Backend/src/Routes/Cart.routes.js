@@ -1,8 +1,11 @@
 import express from "express";
-
-
 import { isAuthenticated } from "../Middlewares/isAuth.js";
-import { addToCart, getCart, removeFromCart, updateQuantity } from "../Controllers/Cart.Controller.js";
+import {
+  addToCart,
+  getCart,
+  removeFromCart,
+  updateQuantity,
+} from "../Controllers/Cart.Controller.js";
 
 const router = express.Router();
 
