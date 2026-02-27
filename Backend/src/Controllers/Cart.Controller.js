@@ -135,6 +135,8 @@ export const removeFromCart = async (req, res) => {
       (acc, item) => acc + item.price * item.quantity,
       0
     );
+
+    cart = await cart.populate("items.productId")
     await cart.save();
 
     res.status(200).json({
