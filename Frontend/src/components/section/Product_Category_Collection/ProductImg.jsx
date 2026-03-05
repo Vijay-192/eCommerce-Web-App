@@ -1,0 +1,32 @@
+import React, { useState } from "react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+
+function ProductImg({ images }) {
+  const [mainImg, setMainImg] = useState(images[0].url);
+  return (
+    <div className="flex gap-5 w-max">
+      <div className="gap-5 flex flex-col">
+        {images.map(img => (
+          <img
+            key={img.url}
+            src={img.url}
+            alt=""
+            onClick={() => setMainImg(img.url)}
+            className="cursor-pointer w-20 h-20 border shadow-lg"
+          />
+        ))}
+      </div>
+
+      <Zoom>
+        <img
+          src={mainImg}
+          alt="main product"
+          className="w-154 h-146 border shadow-lg"
+        />
+      </Zoom>
+    </div>
+  );
+}
+
+export default ProductImg;

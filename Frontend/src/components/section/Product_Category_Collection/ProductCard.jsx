@@ -83,14 +83,14 @@ const ProductCard = ({ product, loading }) => {
         >
           <button
             onClick={() => navigate(`/product/${product._id}`)}
-            className="flex-1 bg-cyan-400 hover:bg-cyan-300 text-black font-bold tracking-wide uppercase text-sm px-6 py-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center gap-2"
+            className="flex-1 cursor-pointer bg-cyan-400 hover:bg-cyan-300 text-black font-bold tracking-wide uppercase text-sm px-6 py-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 flex items-center justify-center gap-2"
           >
             VIEW <Plus size={18} strokeWidth={3} />
           </button>
 
           <button
             onClick={() => addToCart(product._id)}
-            className="bg-pink-400 hover:bg-pink-300 text-black p-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150"
+            className=" cursor-pointer bg-pink-400 hover:bg-pink-300 text-black p-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150"
           >
             <ShoppingCart size={20} strokeWidth={3} />
           </button>
