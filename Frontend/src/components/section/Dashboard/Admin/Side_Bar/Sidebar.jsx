@@ -23,7 +23,7 @@ function Sidebar() {
   ];
   return (
     <>
-      <div className="flex h-screen bg-yellow-100 overflow-hidden uppercase">
+      <div className="flex h-screen fixed bg-yellow-100 overflow-hidden uppercase">
         {/* Overlay (Mobile) */}
         {mobileOpen && (
           <div

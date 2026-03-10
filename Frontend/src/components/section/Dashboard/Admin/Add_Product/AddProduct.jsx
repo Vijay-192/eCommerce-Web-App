@@ -89,9 +89,15 @@ function AddProduct() {
       setLoading(false);
     }
   };
-
   return (
-    <div className="w-full min-h-screen bg-amber-100 flex items-center justify-center p-4 uppercase ">
+
+  <div className=" bg-amber-100 
+h-[90vh] 
+  
+  ">
+
+
+      <div className="w-full flex items-center justify-center p-7 uppercase ">
       <div className="w-full max-w-6xl bg-white shadow-2xl rounded-2xl p-6 md:p-10">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
           Add New Product
@@ -212,6 +218,8 @@ function AddProduct() {
         </form>
       </div>
     </div>
+  </div>
+
   );
 }
 
