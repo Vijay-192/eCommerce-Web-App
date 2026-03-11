@@ -8,7 +8,7 @@ export const addProduct = async (req, res) => {
     const { productName, productDesc, productPrice, category, brand } =
       req.body;
     const userId = req.userId;
-    
+
     if (!productName || !productDesc || !productPrice || !category || !brand) {
       return res.status(400).json({
         success: false,
@@ -18,8 +18,8 @@ export const addProduct = async (req, res) => {
 
     // Multiple images handle
     let productImg = [];
-    if (req.files && req.files.length > 0) {  
-      for (let file of req.files) {            
+    if (req.files && req.files.length > 0) {
+      for (let file of req.files) {
         const fileUri = getDataUri(file);
         const result = await cloudinary.uploader.upload(fileUri, {
           folder: "ecommerce_mern_products",
@@ -43,8 +43,8 @@ export const addProduct = async (req, res) => {
     });
 
     return res.status(200).json({
-      success: true,  
-      message: "Product added successfully", 
+      success: true,
+      message: "Product added successfully",
       product: newProduct,
     });
   } catch (error) {
@@ -109,70 +109,68 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+
 export const updateProduct = async (req, res) => {
   try {
     const { productId } = req.params;
     const {
-      productName,
-      productDesc,
-      productPrice,
-      category,
-      brand,
+      ProductName,
+      ProductDesc,
+      ProductPrice,
+      Category,
+      Brand,
       existingImages,
     } = req.body;
+
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
+      return res.status(404).json({ success: false, message: "Product not found" });
     }
+
     let updateImages = [];
-    // keep selected old img
+
     if (existingImages) {
-      const keepIds = json.parse(existingImages);
+      const keepIds = JSON.parse(existingImages);
       updateImages = product.productImg.filter(img =>
         keepIds.includes(img.public_id)
       );
-      // delete only
       const removedImages = product.productImg.filter(
         img => !keepIds.includes(img.public_id)
       );
-      for (let img of removedImages)
+      for (let img of removedImages) {
         await cloudinary.uploader.destroy(img.public_id);
+      }
     } else {
-      updateImages = product.productImg; //keep all if nothing send
+      updateImages = product.productImg;
     }
-    // upload new img if any
-    if (req.files && req.files.legnth > 0) {
+
+    if (req.files && req.files.length > 0) {
       for (let file of req.files) {
         const fileUri = getDataUri(file);
         const result = await cloudinary.uploader.upload(fileUri, {
           folder: "ecommerce_mern_products",
         });
-        updateImages.push({
-          url: result.secure_url,
-          public_id: result.public_id,
-        });
+        updateImages.push({ url: result.secure_url, public_id: result.public_id });
       }
     }
-    // update product
-    product.productName = productName || product.productName;
-    product.productDesc = productDesc || product.productDesc;
-    product.productPrice = productPrice || product.productPrice;
-    product.category = category || product.category;
-    product.brand = brand || product.brand;
+
+
+    product.productName = ProductName || product.productName;
+    product.productDesc = ProductDesc || product.productDesc;
+    product.productPrice = ProductPrice || product.productPrice;
+    product.category = Category || product.category;
+    product.brand = Brand || product.brand;
     product.productImg = updateImages;
+
     await product.save();
+
     return res.status(200).json({
-      success:true,
-      message:"Product Update successfully",
-      product
-    })
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
+      success: true,
+      message: "Product updated successfully",
+      product,
     });
+  } catch (error) {
+    console.error("UPDATE ERROR:", error.message); // helpful for future debug
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
