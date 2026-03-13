@@ -16,7 +16,7 @@ import AddProduct from "./components/section/Dashboard/Admin/Add_Product/AddProd
 import AdminProduct from "./components/section/Dashboard/Admin/Admin_Product/AdminProduct";
 import AdminOrder from "./components/section/Dashboard/Admin/Admin_Order/AdminOrder";
 import ShowUserOrders from "./components/section/Dashboard/Admin/ShowUserOrders";
-import AdminUser from "./components/section/Dashboard/Admin/AdminUser";
+import AdminUser from "./components/section/Dashboard/Admin/Admin_Users/AdminUser";
 import UserInfo from "./components/section/Dashboard/Admin/UserInfo";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import SingleProduct from "./components/section/Product_Category_Collection/SingleProduct";
@@ -77,13 +77,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element:<>
-    <ProtectedRoute adminOnly={true}>
-      <Navbar/>
-    <Dashboard />
+    element: <>
+      <ProtectedRoute adminOnly={true}>
+        <Navbar />
+        <Dashboard />
 
-    </ProtectedRoute>
-    </> ,
+      </ProtectedRoute>
+    </>,
     children: [
       {
         path: "sales",
