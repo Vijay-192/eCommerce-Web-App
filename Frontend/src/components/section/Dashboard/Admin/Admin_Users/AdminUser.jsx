@@ -1,84 +1,16 @@
-// import axios from "axios";
-// import { Search } from "lucide-react";
-// import React, { useEffect, useState } from "react";
-// import UserLogo from "../../../../../assets/user.svg"
-// function AdminUser() {
-//   const [users, setUsers] = useState([]);
-//   const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
-//   const [searchTerm,setSearchTerm]=useState("");
-
-//   const getAllUsers = async () => {
-//     const accessToken = localStorage.getItem("accessToken");
-//     try {
-//       const res = await axios.get(`${API_BASE_URL}/all-user`,{
-//          headers:{
-//           Authorization:`Bearer ${accessToken}`
-//          }
-//       });
-//       if (res.data.success) {
-//         setUsers(res.data.users);
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   const filteredUsers = users.filter(user=>{
-//     `${user.firstName} ${user.lastName} ${user.email}`.toLowerCase().includes(searchTerm.toLowerCase()) || 
-//   })
-  
-//   useEffect(() => {
-//     getAllUsers();
-//   }, []);
-//   return ( 
-  
-//   <div className="pl-[350px] py-20 pr-20 mx-auto px-4">
-//     <h1 className="text-2xl font-bold text-gray-800"> User Management</h1>
-//       <p>View and manage register users</p>
-//       <div className=" flex relative w-[300px] mt-5">
-//         <Search className="absolute left-2 top-1 text-gray-600 w-5"/>
-//         <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} placeholder="Search users" className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-//       </div>
-//       <div>
-//         {
-//           users.map((user,index)=>{
-//            return <div key={index} className="flex items-center justify-between">
-//             <div className="flex items-center gap-2">
-//              <img src={user?.profilePic || UserLogo} className="rounded-full w-10 h-10 aspect-square object-cover border border-gray-300" />
-//              <div>
-//               <h1 className="font-semibold">{user?.firstName} {user?.lastName}</h1>
-//               <h3 className="text-sm text-gray-600">{user?.email}</h3>
-//              </div>
-//             </div>
-//              <div>
-//               <button className="bg-red-500 text-white px-4 py-2 rounded-lg">Edit</button>
-//               <button className="bg-red-500 text-white px-4 py-2 rounded-lg">Show Order</button>
-//              </div>
-             
-//             </div>
-//           })
-//         }
-//       </div>
-
-
-//   </div>
-
-//   )
-// }
-
-// export default AdminUser;
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Search, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/retroui/Button";
+import userAvatar from "@/assets/user.svg";
 
 function AdminUser() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
 
   const getAllUsers = async () => {
@@ -107,7 +39,7 @@ const navigate = useNavigate();
     getAllUsers();
   }, []);
 
-  /* -------- FILTER USERS (firstname + lastname + email) -------- */
+
 
   const filteredUsers = users.filter((user) => {
     const firstName = user.firstName?.toLowerCase() || "";
@@ -173,7 +105,7 @@ const navigate = useNavigate();
           {filteredUsers.map((user) => (
             <div
               key={user._id}
-              className="flex items-center gap-3 p-4 bg-pink-200
+              className="flex items-center gap-3 p-4 bg-[#F59A3D]
               border-4 border-black shadow-[5px_5px_0px_black]"
             >
 
@@ -181,7 +113,7 @@ const navigate = useNavigate();
               <img
                 src={
                   user.profilePic ||
-                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  userAvatar
                 }
                 alt="user"
                 className="w-10 h-10 rounded-full border-2 border-black"
@@ -201,8 +133,12 @@ const navigate = useNavigate();
                 <div className="flex gap-2 mt-2">
 
                   <Button
-                  onClick={()=>navigate(`/dashboard/user/${user?._id}`)}
-                  variant={"outline"}
+                    onClick={() =>
+                      navigate(`/dashboard/user/${user?._id}`)
+
+                    }
+
+                    variant={"outline"}
                     className=" cursor-pointer flex bg-white items-center gap-1 "
                   >
                     <Pencil size={13} />
@@ -215,7 +151,7 @@ const navigate = useNavigate();
                     active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                   >
                     <Eye size={12} />
-                     Show the Order
+                    Show the Order
                   </button>
 
                 </div>

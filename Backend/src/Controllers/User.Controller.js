@@ -5,7 +5,7 @@ import { verifyEmail } from "../Services/Email/Verify.Email.js";
 import { Session } from "../Models/Session.model.js";
 import { SendOTPmail } from "../Services/Email/Send.OTP.Mail.js";
 import cloudinary from "../Utils/cloudinary.js";
-import { resolveContent } from "nodemailer/lib/shared/index.js";
+
 
 export const register = async (req, res) => {
   try {
@@ -338,7 +338,7 @@ export const changePassword = async (req, res) => {
       message: error.message,
     });
   }
-};          
+};
 
 export const allUser = async (_, res) => {
   try {
@@ -354,21 +354,22 @@ export const allUser = async (_, res) => {
     });
   }
 };
-
 export const getUserById = async (req, res) => {
   try {
-    const { userId } = req.params; // extract userid from req params
+    const { userId } = req.params;
     const user = await User.findById(userId).select(
       "-password -otpExpiry -token"
     );
     if (!user) {
       return res.status(404).json({
-        success: "User not found",
+        success: false,
+        message: "User not found",
       });
     }
+
     res.status(200).json({
-      success: false,
-      message: user,
+      success: true,
+      user: user,
     });
   } catch (error) {
     return res.status(500).json({
@@ -377,7 +378,6 @@ export const getUserById = async (req, res) => {
     });
   }
 };
-
 export const updateUser = async (req, res) => {
   try {
     const userIdToUpdate = req.params.id;
@@ -436,9 +436,9 @@ export const updateUser = async (req, res) => {
 
     const updateUser = await user.save()
     return res.status(200).json({
-      success:true,
-      message:"Profie Update Successfully",
-      user:updateUser,
+      success: true,
+      message: "Profie Update Successfully",
+      user: updateUser,
     })
   } catch (error) {
     return res.status(500).json({
@@ -447,4 +447,3 @@ export const updateUser = async (req, res) => {
     });
   }
 };
-  

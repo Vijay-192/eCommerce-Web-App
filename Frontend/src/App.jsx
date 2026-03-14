@@ -17,7 +17,7 @@ import AdminProduct from "./components/section/Dashboard/Admin/Admin_Product/Adm
 import AdminOrder from "./components/section/Dashboard/Admin/Admin_Order/AdminOrder";
 import ShowUserOrders from "./components/section/Dashboard/Admin/ShowUserOrders";
 import AdminUser from "./components/section/Dashboard/Admin/Admin_Users/AdminUser";
-import UserInfo from "./components/section/Dashboard/Admin/UserInfo";
+import UserInfo from "./components/section/Dashboard/Admin/User_info/UserInfo";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import SingleProduct from "./components/section/Product_Category_Collection/SingleProduct";
 
@@ -109,10 +109,8 @@ const router = createBrowserRouter([
         path: "users",
         element: <AdminUser />,
       },
-      {
-        path: "user/:id",
-        element: <UserInfo />,
-      },
+
+      { path: "user/:userId", element: <UserInfo /> }
     ],
   },
 ]);
