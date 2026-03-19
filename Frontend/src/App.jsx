@@ -20,6 +20,7 @@ import AdminUser from "./components/section/Dashboard/Admin/Admin_Users/AdminUse
 import UserInfo from "./components/section/Dashboard/Admin/User_info/UserInfo";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import SingleProduct from "./components/section/Product_Category_Collection/SingleProduct";
+import AddressForm from "./components/pages/AddressForm";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-
         <Product />
       </>
     ),
@@ -70,8 +70,16 @@ const router = createBrowserRouter([
     element: (
       <>
         <Navbar />
-
         <ShopingCart />
+      </>
+    ),
+  },
+  {
+    path: "/address",
+    element: (
+      <>
+
+        <AddressForm />
       </>
     ),
   },

@@ -208,6 +208,7 @@ function ShopingCart() {
                 {/* place order */}
                 <div className="flex flex-col items-center gap-4 mt-6">
                   <Button
+                  onClick={()=>navigate("/address")}
                     className="w-full bg-orange-400 border-4 border-black 
     py-3 font-bold uppercase text-center
     transition-all duration-150 

@@ -18,8 +18,8 @@ function Sidebar() {
     { to: "/dashboard/sales", label: "Dashboard", icon: <LayoutDashboard /> },
     { to: "/dashboard/add-product", label: "Add Product", icon: <Activity /> },
     { to: "/dashboard/products", label: "Products", icon: <CheckSquare /> },
-    { to: "/dashboard/orders", label: "Orders", icon: <BarChart3 /> },
     { to: "/dashboard/users", label: "Users", icon: <Mail /> },
+    { to: "/dashboard/orders", label: "Orders", icon: <BarChart3 /> },
   ];
   return (
     <>
