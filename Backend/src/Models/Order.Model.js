@@ -1,4 +1,6 @@
+
 import mongoose from "mongoose";
+
 const orderSchema = new mongoose.Schema(
     {
         userId: {
@@ -6,9 +8,9 @@ const orderSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
-        product: [
+        products: [
             {
-                productId: {
+                product: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "Product",
                     required: true,
@@ -16,45 +18,23 @@ const orderSchema = new mongoose.Schema(
                 quantity: {
                     type: Number,
                     required: true,
-
                 },
-
-
             }
         ],
-
-        amount: {
-            type: Number,
-            required: true,
-        },
-        tax: {
-            type: Number,
-            required: true,
-        },
-        shipping: {
-            type: Number,
-            required: true,
-        },
-        currency: {
-            type: String,
-            default: "INR",
-        },
+        amount: { type: Number, required: true },
+        tax: { type: Number, required: true },
+        shipping: { type: Number, required: true },
+        currency: { type: String, default: "INR" },
         status: {
             type: String,
             enum: ["Pending", "Paid", "Failed"],
             default: "Pending",
         },
-        // razorpay fields method
-        razorpayOrderId: {
-            type: String,
-        },
-        razorpayPaymentId: {
-            type: String,
-        },
-        razorpaySignature: {
-            type: String,
-        },
+        razorpayOrderId: { type: String },
+        razorpayPaymentId: { type: String },
+        razorpaySignature: { type: String },
     },
     { timestamps: true }
 );
+
 export const Order = mongoose.model("Order", orderSchema);

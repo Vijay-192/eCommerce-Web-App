@@ -11,15 +11,14 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 app.use("/api/v1/user", userRoute);
-app.use("/api/v1/product",productRoute );
-app.use("/api/v1/cart",cartRoute );
-app.use("/api/v1/order",orderRoute );
+app.use("/api/v1/product", productRoute);
+app.use("/api/v1/cart", cartRoute);
+app.use("/api/v1/orders", orderRoute);
 
-//     http://localhost:5000/api/v1/user/register
 
 app.listen(PORT, () => {
   ConnectDatabase();
