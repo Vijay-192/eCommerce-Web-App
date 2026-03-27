@@ -1,7 +1,6 @@
 import cloudinary from "../Utils/cloudinary.js";
 import getDataUri from "../Utils/dataUri.js";
 import { Product } from "../Models/Product.Model.js";
-import { json } from "stream/consumers";
 
 export const addProduct = async (req, res) => {
   try {

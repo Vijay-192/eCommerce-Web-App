@@ -1,9 +1,10 @@
 import express from "express";
 import "dotenv/config";
 import ConnectDatabase from "./Database/db.js";
-import userRoute from "./Routes/User.routes.js";
-import productRoute from "./Routes/Product.routes.js"
-import cartRoute from "./Routes/Cart.routes.js"
+import userRoute from "./Routes/User.route.js";
+import productRoute from "./Routes/Product.route.js"
+import cartRoute from "./Routes/Cart.route.js"
+import orderRoute from "./Routes/Order.route.js"
 import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.use(cors({
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product",productRoute );
 app.use("/api/v1/cart",cartRoute );
+app.use("/api/v1/order",orderRoute );
 
 //     http://localhost:5000/api/v1/user/register
 
