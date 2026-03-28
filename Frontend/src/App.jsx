@@ -21,6 +21,7 @@ import UserInfo from "./components/section/Dashboard/Admin/User_info/UserInfo";
 import ProtectedRoute from "./components/pages/ProtectedRoute";
 import SingleProduct from "./components/section/Product_Category_Collection/SingleProduct";
 import AddressForm from "./components/pages/AddressForm";
+import OrderSuccess from "./components/pages/OrderSuccess";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,14 @@ const router = createBrowserRouter([
       <>
 
         <AddressForm />
+      </>
+    ),
+  },
+  {
+    path: "/order-success",
+    element: (
+      <>
+        <OrderSuccess />
       </>
     ),
   },
