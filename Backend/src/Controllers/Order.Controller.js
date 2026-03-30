@@ -110,3 +110,22 @@ export const verifyPayment = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error });
     }
 };
+ 
+export const getMyOrder = async(req,res)=>{
+    try {
+        const userId = req.id
+        const orders = await Order.find({user:userId})
+        .populate({path:"products.productId",select:"productName productPrice productImg"})
+        .populate("user","firstName lastName email")
+
+        res.status(200).json({
+            success:true,
+            count:orders.length,
+            orders,
+            message:"Orders fetched successfully"
+        })  
+    } catch (error) {
+        console.error("Error in getOrder:", error);
+        res.status(500).json({ message: "Internal server error", error });
+    }
+}
