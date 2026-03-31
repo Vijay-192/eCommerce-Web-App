@@ -17,9 +17,9 @@ import { toast } from "sonner";
 import axios from "axios";
 import { setUser } from "@/redux/userSlice";
 import { Input } from "../retroui/Input";
-
+import MyOrder from "./MyOrder";
+import { API_URL_USER } from "@/api/api";
 function Profile() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
   const [active, setActive] = useState("profile");
   const [edit, setEdit] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
@@ -117,7 +117,7 @@ function Profile() {
       if (file) formData.append("file", file);
 
       const res = await axios.put(
-        `${API_BASE_URL}/update/${user._id}`,
+        `${API_URL_USER}/update/${user._id}`,
         formData,
         {
           headers: {
@@ -238,11 +238,10 @@ function Profile() {
                         Profile Management
                       </h2>
                       <span
-                        className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
-                          edit
+                        className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${edit
                             ? "bg-yellow-100 text-yellow-700 border border-yellow-300"
                             : "bg-green-100 text-green-700 border border-green-300"
-                        }`}
+                          }`}
                       >
                         {edit ? "Editing..." : "Up to date"}
                       </span>
@@ -301,7 +300,7 @@ function Profile() {
                       type="button"
                       onClick={async () => {
                         if (edit) {
-                          await handleSubmit({ preventDefault: () => {} });
+                          await handleSubmit({ preventDefault: () => { } });
                         } else {
                           setEdit(true);
                         }
@@ -318,7 +317,7 @@ function Profile() {
                     <div className="relative w-full h-full group">
                       <div className="w-full h-full rounded-full overflow-hidden border-4 border-gray-200 shadow-xl bg-white">
                         {isImage &&
-                        updateUser?.profilepic?.startsWith("blob:") ? (
+                          updateUser?.profilepic?.startsWith("blob:") ? (
                           <img
                             src={updateUser.profilepic}
                             alt="Profile"
@@ -460,6 +459,13 @@ function Profile() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* ================= ORDERS ================= */}
+        {active === "security" && (
+          <>
+            <MyOrder />
+          </>
         )}
       </div>
     </div>

@@ -11,8 +11,8 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
+import { API_URL_USER } from "@/api/api";
 function SignIn() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
   const [showPassword, seShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ function SignIn() {
       setLoading(true);
       const res = await axios.post(
         `
-        ${API_BASE_URL}/login`,
+        ${API_URL_USER}/login`,
 
         formData,
         {

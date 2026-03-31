@@ -8,8 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { setProducts } from "@/redux/productSlice";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL_PRODUCT;
-
+import { API_URL_PRODUCT } from "@/api/api";
 function AdminProduct() {
   const { products } = useSelector(store => store.product);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -43,7 +42,7 @@ function AdminProduct() {
 
     try {
       const res = await axios.put(
-        `${API_BASE_URL}/update/${editProduct._id}`,
+        `${API_URL_PRODUCT}/update/${editProduct._id}`,
         formData,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
@@ -68,7 +67,7 @@ function AdminProduct() {
     setIsDeleting(true);
     try {
       const res = await axios.delete(
-        `${BASE_URL}/api/v1/product/delete/${deleteTarget._id}`,
+        `${API_URL_PRODUCT}/delete/${deleteTarget._id}`,
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       if (res.data.success) {

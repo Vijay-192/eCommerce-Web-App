@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { setUser } from "@/redux/userSlice";
 import axios from "axios";
 import userAvatar from "@/assets/user.svg";
-
+import { API_URL_USER } from "@/api/api";
 function UserInfo() {
   const navigate = useNavigate();
   const [updateUser, setUpdateUser] = useState(null);
@@ -18,7 +18,6 @@ function UserInfo() {
   const { userId } = useParams();
   const user = useSelector((state) => state.user.user);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +68,7 @@ function UserInfo() {
       }
 
       const res = await axios.put(
-        `${API_BASE_URL}/update/${updateUser._id}`,
+        `${API_URL_USER}/update/${updateUser._id}`,
         formData,
         {
           headers: {

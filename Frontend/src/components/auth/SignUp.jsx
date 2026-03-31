@@ -7,9 +7,8 @@ import { Loader } from "../retroui/Loader";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
+import { API_URL_USER } from "@/api/api";
 function SignUp() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
-
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,7 +33,7 @@ function SignUp() {
       setLoading(true);
       const res = await axios.post(
         `
-        ${API_BASE_URL}/register
+        ${API_URL_USER}/register
         `,
         formData,
         {

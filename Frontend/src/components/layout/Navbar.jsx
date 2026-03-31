@@ -9,9 +9,8 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
-
+import { API_URL_USER } from "@/api/api";
 function Navbar() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useSelector(store => store.user);
   const { cart } = useSelector(store => store.product);
@@ -23,7 +22,7 @@ function Navbar() {
     try {
       setLoading(true);
       const res = await axios.post(
-        `${API_BASE_URL}/logout`,
+        `${API_URL_USER}/logout`,
         {},
         {
           headers: {
@@ -51,14 +50,14 @@ function Navbar() {
         {/* LEFT SIDE */}
         <div className="w-1/2 flex items-center justify-between px-8">
           {/* Logo */}
-      <NavLink
-  to="/"
-  onClick={() => window.location.reload()}
->
-  <h1 className="text-xl font-semibold tracking-wide">
-    Fashono
-  </h1>
-</NavLink>
+          <NavLink
+            to="/"
+            onClick={() => window.location.reload()}
+          >
+            <h1 className="text-xl font-semibold tracking-wide">
+              Fashono
+            </h1>
+          </NavLink>
 
           {/* Links */}
           <div className="flex gap-8 text-sm font-medium justify-end font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
