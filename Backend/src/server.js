@@ -8,7 +8,7 @@ import orderRoute from "./Routes/order.route.js"
 import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+// fixing the route
 app.use(express.json());
 app.use(cors({
   origin: process.env.FRONTEND_URL,
