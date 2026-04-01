@@ -1,4 +1,4 @@
-import { User } from "../Models/user.model.js";
+import { User } from "../Models/user.model.js";// changse
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { verifyEmail } from "../Services/Email/Verify.Email.js";
