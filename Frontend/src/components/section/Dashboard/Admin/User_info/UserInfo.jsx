@@ -94,7 +94,7 @@ function UserInfo() {
 
   const getUserDetails = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/get-user/${userId}`);
+      const res = await axios.get(`${API_URL_USER}/get-user/${userId}`);
       if (res.data.success) {
         setUpdateUser(res.data.user);
       }
