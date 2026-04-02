@@ -5,14 +5,12 @@ import { addAddress, deleteAddress, setCart, setSelectedAddress } from "@/redux/
 import axios from "axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-
+import { API_URL_ORDER } from "@/api/api";
 function AddressForm() {
     const { cart, addresses, selectedAddress } = useSelector((store) => store.product);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
-    const API_BASE_URL = import.meta.env.VITE_API_URL_ORDER;
-
     const [showForm, setShowForm] = useState(addresses?.length > 0 ? false : true);
     const [deleteIndex, setDeleteIndex] = useState(null);
     const [formData, setFormData] = useState({
@@ -44,7 +42,7 @@ function AddressForm() {
         const accessToken = localStorage.getItem("accessToken");
 
         try {
-            const res = await axios.post(`${API_BASE_URL}/create-order`, {
+            const res = await axios.post(`${API_URL_ORDER}/create-order`, {
                 products: cart?.items?.map((item) => ({
                     product: item._id,
                     quantity: item.quantity,
