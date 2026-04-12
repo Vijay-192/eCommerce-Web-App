@@ -11,7 +11,7 @@ import {
   updateUser,
   Verify,
   VerifyOTP,
-} from "../Controllers/User.Controller.js";
+} from "../Controllers/user.controller.js"; // Importing controller functions for user-related operations
 import { isAdmin, isAuthenticated } from "../Middlewares/isAuth.js";
 import { singleUpload } from "../Middlewares/multer.js";
 

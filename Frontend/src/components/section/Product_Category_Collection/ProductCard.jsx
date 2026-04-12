@@ -6,23 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 import { setCart } from "@/redux/productSlice";
 import { toast } from "sonner";
+import { API_URL_CART } from "@/api/api";
 
 const ProductCard = ({ product, loading }) => {
-  const { productImg, productPrice, productName } = product;
   const [isHovered, setIsHovered] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
-  const API_BASE_URL = import.meta.env.VITE_API_URL_CART;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const addToCart = async productId => {
+  const addToCart = async (productId) => {
     try {
       const res = await axios.post(
-        `
-        ${API_BASE_URL}/add
-        
-        
-        `,
+        `${API_URL_CART}/add`,
         { productId },
         {
           headers: {
@@ -39,6 +34,26 @@ const ProductCard = ({ product, loading }) => {
       toast.error("Failed to add product to cart");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="border-[4px] border-black bg-white relative overflow-hidden rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        {/* Price Badge Skeleton */}
+        <div className="absolute top-4 right-4 bg-gray-200 border-[3px] border-black px-3 py-2 rounded-[22px] z-10 w-20 h-10 animate-pulse" />
+
+        {/* Image Skeleton */}
+        <div className="w-full aspect-square border-b-[4px] border-black bg-gray-200 animate-pulse" />
+
+        {/* Text Skeleton */}
+        <div className="p-6 bg-white space-y-3 flex flex-col items-center">
+          <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4" />
+          <div className="h-4 bg-gray-200 rounded animate-pulse w-1/2" />
+        </div>
+      </div>
+    );
+  }
+
+  const { productImg, productPrice, productName } = product;
 
   return (
     <div
@@ -59,27 +74,24 @@ const ProductCard = ({ product, loading }) => {
         <img
           src={productImg[0]?.url}
           alt={productName}
-          className={`w-full h-full object-contain p-8 transition-opacity duration-300 ${
-            isHovered ? "opacity-0" : "opacity-100"
-          }`}
+          className={`w-full h-full object-contain p-8 transition-opacity duration-300 ${isHovered ? "opacity-0" : "opacity-100"
+            }`}
         />
 
         {/* Second Image - Hover State */}
         <img
           src={productImg[1]?.url || productImg[0]?.url}
           alt={productName}
-          className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
+          className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"
+            }`}
         />
 
         {/* Hover Overlay with Buttons */}
         <div
-          className={`absolute bottom-0 left-0 right-0 flex gap-3 p-4 transition-all duration-200 ${
-            isHovered
+          className={`absolute bottom-0 left-0 right-0 flex gap-3 p-4 transition-all duration-200 ${isHovered
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-8 pointer-events-none"
-          }`}
+            }`}
         >
           <button
             onClick={() => navigate(`/product/${product._id}`)}
@@ -90,7 +102,7 @@ const ProductCard = ({ product, loading }) => {
 
           <button
             onClick={() => addToCart(product._id)}
-            className=" cursor-pointer bg-pink-400 hover:bg-pink-300 text-black p-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150"
+            className="cursor-pointer bg-pink-400 hover:bg-pink-300 text-black p-4 border-[3px] border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150"
           >
             <ShoppingCart size={20} strokeWidth={3} />
           </button>

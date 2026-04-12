@@ -7,10 +7,9 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "@/redux/productSlice";
-
+import { API_URL_PRODUCT } from "@/api/api";
 function AddProduct() {
   const accessToken = localStorage.getItem("accessToken");
-  const API_BASE_URL = import.meta.env.VITE_API_URL_PRODUCT;
   const dispatch = useDispatch();
   const products = useSelector(state => state.products?.products ?? []);
   const [loading, setLoading] = useState(false);
@@ -59,7 +58,7 @@ function AddProduct() {
 
     try {
       setLoading(true);
-      const res = await axios.post(`${API_BASE_URL}/add`, formData, {
+      const res = await axios.post(`${API_URL_PRODUCT}/add`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

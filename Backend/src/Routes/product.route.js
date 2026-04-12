@@ -1,10 +1,10 @@
-import express from "express";
+import express from "express"; // changse
 import {
   addProduct,
   deleteProduct,
   getAllProduct,
   updateProduct,
-} from "../Controllers/Product.Controller.js";
+} from "../Controllers/product.controller.js";
 import { isAdmin, isAuthenticated } from "../Middlewares/isAuth.js";
 import { multipleUpload } from "../Middlewares/multer.js";
 

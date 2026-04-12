@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FiMail } from "react-icons/fi";
-
+import { API_URL_USER } from "@/api/api";
 function VerifyEmail() {
   const navigate = useNavigate();
   const { token } = useParams();
-
   const [status, setStatus] = useState("verifying");
   const [message, setMessage] = useState("Verifying your email...");
 
   const verifyEmail = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/user/verify/",
+        `${API_URL_USER}/verify/`,
         {},
         {
           headers: {

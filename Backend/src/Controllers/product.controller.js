@@ -1,6 +1,6 @@
 import cloudinary from "../Utils/cloudinary.js";
 import getDataUri from "../Utils/dataUri.js";
-import { Product } from "../Models/Product.Model.js";
+import { Product } from "../Models/product.model.js"; // changse
 
 export const addProduct = async (req, res) => {
   try {

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -166,44 +164,43 @@ const FilterSidebar = ({
         </div>
 
         {/* Category Flyout (portal) */}
-   <FlyoutPortal
-  anchorRef={categoryRef}
-  open={hoveredSection === "category"}
-  onMouseEnter={() => openFlyout("category")}
-  onMouseLeave={() => closeFlyout("category")}
->
-  <div className="w-64 bg-white border-2 border-black rounded-[18px] shadow-[5px_5px_0px_0px_black] overflow-hidden flex flex-col">
-    
-    {/* Sticky Header */}
-    <div className="sticky top-0 z-10 bg-white px-4 pt-3 pb-2 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200">
-      Categories
-    </div>
-
-    {/* Scrollable List */}
-    <div className="max-h-60 overflow-y-auto scroll-smooth custom-scrollbar">
-      {UniqueCategory.map((cat, i) => (
-        <div
-          key={i}
-          onClick={() => {
-            setCategory(cat);
-            setHoveredSection(null);
-          }}
-          className={`flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer border-b border-gray-100 last:border-none transition-colors duration-150 hover:bg-yellow-100 ${
-            category === cat
-              ? "bg-pink-100 text-pink-700"
-              : "text-gray-700"
-          }`}
+        <FlyoutPortal
+          anchorRef={categoryRef}
+          open={hoveredSection === "category"}
+          onMouseEnter={() => openFlyout("category")}
+          onMouseLeave={() => closeFlyout("category")}
         >
-          <span className="truncate">{cat}</span>
+          <div className="w-64 bg-white border-2 border-black rounded-[18px] shadow-[5px_5px_0px_0px_black] overflow-hidden flex flex-col">
 
-          {category === cat && (
-            <span className="w-2 h-2 rounded-full bg-pink-500 shrink-0" />
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-</FlyoutPortal>
+            {/* Sticky Header */}
+            <div className="sticky top-0 z-10 bg-white px-4 pt-3 pb-2 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200">
+              Categories
+            </div>
+
+            {/* Scrollable List */}
+            <div className="max-h-60 overflow-y-auto scroll-smooth custom-scrollbar">
+              {UniqueCategory.map((cat, i) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    setCategory(cat);
+                    setHoveredSection(null);
+                  }}
+                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer border-b border-gray-100 last:border-none transition-colors duration-150 hover:bg-yellow-100 ${category === cat
+                    ? "bg-pink-100 text-pink-700"
+                    : "text-gray-700"
+                    }`}
+                >
+                  <span className="truncate">{cat}</span>
+
+                  {category === cat && (
+                    <span className="w-2 h-2 rounded-full bg-pink-500 shrink-0" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </FlyoutPortal>
 
         {/* ── Brand Trigger ── */}
         <div
@@ -231,19 +228,22 @@ const FilterSidebar = ({
             </div>
           </div>
         </div>
-
         {/* Brand Flyout (portal) */}
-        {/* <FlyoutPortal
+        <FlyoutPortal
           anchorRef={brandRef}
           open={hoveredSection === "brand"}
           onMouseEnter={() => openFlyout("brand")}
           onMouseLeave={() => closeFlyout("brand")}
         >
-          <div className="bg-white border-2 border-black rounded-[18px] shadow-[5px_5px_0px_0px_black] overflow-hidden max-h-72 flex flex-col">
-            <div className="px-4 pt-3 pb-1.5 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200 shrink-0">
+          <div className="bg-white border-2 border-black rounded-[18px] shadow-[5px_5px_0px_0px_black] overflow-hidden w-64 flex flex-col">
+
+            {/* Header - fixed */}
+            <div className="px-4 pt-3 pb-1.5 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200">
               Brands
             </div>
-            <div className="overflow-y-auto">
+
+            {/* Scroll only this section */}
+            <div className="max-h-72 overflow-y-auto">
               {UniqueBrand.map((b, i) => (
                 <div
                   key={i}
@@ -251,7 +251,8 @@ const FilterSidebar = ({
                     setBrand(b);
                     setHoveredSection(null);
                   }}
-                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer border-b border-gray-100 last:border-none transition-colors hover:bg-yellow-100 ${brand === b ? "bg-pink-100 text-pink-700" : ""}`}
+                  className={`flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer border-b border-gray-100 last:border-none transition-colors hover:bg-yellow-100 ${brand === b ? "bg-pink-100 text-pink-700" : ""
+                    }`}
                 >
                   <span>{b.toUpperCase()}</span>
                   {brand === b && (
@@ -261,42 +262,7 @@ const FilterSidebar = ({
               ))}
             </div>
           </div>
-        </FlyoutPortal> */}
-<FlyoutPortal
-  anchorRef={brandRef}
-  open={hoveredSection === "brand"}
-  onMouseEnter={() => openFlyout("brand")}
-  onMouseLeave={() => closeFlyout("brand")}
->
-  <div className="bg-white border-2 border-black rounded-[18px] shadow-[5px_5px_0px_0px_black] overflow-hidden w-64 flex flex-col">
-    
-    {/* Header - fixed */}
-    <div className="px-4 pt-3 pb-1.5 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-200">
-      Brands
-    </div>
-
-    {/* Scroll only this section */}
-    <div className="max-h-72 overflow-y-auto">
-      {UniqueBrand.map((b, i) => (
-        <div
-          key={i}
-          onClick={() => {
-            setBrand(b);
-            setHoveredSection(null);
-          }}
-          className={`flex items-center justify-between px-4 py-2.5 text-sm font-semibold cursor-pointer border-b border-gray-100 last:border-none transition-colors hover:bg-yellow-100 ${
-            brand === b ? "bg-pink-100 text-pink-700" : ""
-          }`}
-        >
-          <span>{b.toUpperCase()}</span>
-          {brand === b && (
-            <span className="w-2 h-2 rounded-full bg-pink-500 shrink-0" />
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
-</FlyoutPortal>
+        </FlyoutPortal>
         {/* Price Range */}
         <div className="flex flex-col gap-3">
           <span className="flex items-center gap-2 font-bold text-sm">
