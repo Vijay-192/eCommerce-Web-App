@@ -1,6 +1,5 @@
 import React from "react";
 import { Truck, ShieldCheck, Headphones } from "lucide-react";
-import Slider from "../home/Slider";
 
 function Feature() {
   const features = [
