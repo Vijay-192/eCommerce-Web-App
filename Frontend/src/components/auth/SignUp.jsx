@@ -59,7 +59,7 @@ function SignUp() {
   return (
     <div className="h-[100dvh] overflow-hidden flex items-center justify-center bg-[#F59A3D] relative">
 
-      {/* 🔙 BACK BUTTON */}
+
       <button
         onClick={() => navigate(-1)}
         className="absolute top-3 left-3 border-2 border-black bg-white p-2 shadow-md active:scale-95 z-10"
@@ -67,7 +67,7 @@ function SignUp() {
         <FiArrowLeft size={16} />
       </button>
 
-      {/* SCALE WRAPPER 👇 */}
+
       <div className="w-full max-w-md scale-[0.9] sm:scale-100 origin-center">
 
         {/* CARD */}
@@ -104,6 +104,8 @@ function SignUp() {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
+                  placeholder="Enter your first name"
+                   className="placeholder:text-sm"
                 />
               </div>
 
@@ -114,6 +116,8 @@ function SignUp() {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
+                  placeholder="Enter your last name"
+                   className="placeholder:text-sm"
                 />
               </div>
             </div>
@@ -127,6 +131,7 @@ function SignUp() {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                placeholder="Enter your email"
               />
             </div>
 
@@ -141,6 +146,7 @@ function SignUp() {
                   onChange={handleChange}
                   required
                   className="pr-12"
+                  placeholder="Enter your password"
                 />
 
                 <button

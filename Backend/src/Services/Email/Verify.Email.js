@@ -45,7 +45,7 @@ export const verifyEmail = async (token, email) => {
             Click the button below to verify your email.
           </p>
 
-          <a href="${process.env.FRONTEND_URI}/verify-email/${token}"
+          <a href="${process.env.FRONTEND_URL}/verify-email/${token}"
             style="
               display:inline-block;
               padding:14px 28px;

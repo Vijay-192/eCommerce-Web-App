@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
 import { API_URL_USER } from "@/api/api";
+import NexcartLogo from "./NexcartLogo";
 function Navbar() {
   const accessToken = localStorage.getItem("accessToken");
   const { user } = useSelector(store => store.user);
@@ -44,29 +45,30 @@ function Navbar() {
 
   return (
     <>
-      {/* ── DESKTOP NAVBAR — same as before, hidden on mobile ── */}
+      {/* ── DESKTOP NAVBAR ── */}
       <div className="split-bg hidden md:block">
-        <nav className="w-full h-16 flex border-b-3 border-black">
-          {/* LEFT */}
-          <div className="w-1/2 flex items-center justify-between px-8">
-            <NavLink to="/">
-              <h1 className="text-xl font-semibold tracking-wide">Fashono</h1>
-            </NavLink>
-            <div className="flex gap-8 text-sm font-medium font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
-              {["/", "/collection", "/about", "/store"].map((path, i) => (
-                <NavLink
-                  key={path}
-                  to={path}
-                  className={({ isActive }) => isActive ? "underline" : "hover:underline"}
-                >
-                  {["Home", "Collection", "About", "Store"][i]}
-                </NavLink>
-              ))}
-            </div>
+        <nav className="w-full h-16 flex items-center border-b-3 border-black px-8">
+
+          {/* LOGO */}
+          <NavLink to="/" className="flex-shrink-0 mr-10">
+            <NexcartLogo className="h-10 w-auto" />
+          </NavLink>
+
+          {/* NAV LINKS */}
+          <div className="flex-1 flex items-center justify-center gap-8 text-sm font-medium font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
+            {["/", "/collection", "/about", "/store"].map((path, i) => (
+              <NavLink
+                key={path}
+                to={path}
+                className={({ isActive }) => isActive ? "underline" : "hover:underline"}
+              >
+                {["Home", "Collection", "About", "Store"][i]}
+              </NavLink>
+            ))}
           </div>
 
-          {/* RIGHT */}
-          <div className="w-1/2 flex items-center justify-end gap-6 px-8">
+          {/* RIGHT ACTIONS */}
+          <div className="flex-shrink-0 flex items-center gap-4 ml-10">
             {user && (
               <Link to="/profile">
                 <Tooltip.Provider>
@@ -111,15 +113,20 @@ function Navbar() {
               </Tooltip.Provider>
             </Link>
             {user ? (
-              <Button variant="outline" className="ml-4 bg-orange-400 text-black font-BRODISH-demo leading-[1.2] tracking-[1.5px]" onClick={handleLogout} disabled={loading}>
+              <Button
+                variant="outline"
+                className="bg-orange-400 text-black font-BRODISH-demo leading-[1.2] tracking-[1.5px]"
+                onClick={handleLogout}
+                disabled={loading}
+              >
                 {loading ? "Logging out..." : "Log Out"}
               </Button>
             ) : (
               <>
-                <Button variant="outline" className="ml-4 bg-orange-400 text-black font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
+                <Button variant="outline" className="bg-orange-400 text-black font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
                   <Link to="/signup">Sign Up</Link>
                 </Button>
-                <Button variant="link" className="mr-4 font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
+                <Button variant="link" className="font-BRODISH-demo leading-[1.2] tracking-[1.5px]">
                   <Link to="/signin">Sign In</Link>
                 </Button>
               </>
@@ -128,13 +135,12 @@ function Navbar() {
         </nav>
       </div>
 
-      {/* ── MOBILE TOP BAR — sirf logo ── */}
+      {/* ── MOBILE TOP BAR ── */}
       <div className="md:hidden split-bg">
         <nav className="w-full h-14 flex items-center justify-between px-4 border-b-3 border-black">
           <NavLink to="/">
-            <h1 className="text-xl font-semibold tracking-wide">Fashono</h1>
+            <NexcartLogo className="h-9 w-auto" />
           </NavLink>
-          {/* Admin shortcut — sirf admin ke liye */}
           {admin && (
             <Link to="/dashboard/sales">
               <Button variant="outline" className="p-2 border border-black bg-white">
@@ -145,11 +151,11 @@ function Navbar() {
         </nav>
       </div>
 
-      {/* ── MODERN NEOBRUTALIST BOTTOM NAV ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white h-16 flex items-center justify-around px-1"
-        style={{ borderTop: '1px solid rgba(0,0,0,0.1)' }}>
-
-        {/* Home */}
+      {/* ── MOBILE BOTTOM NAV ── */}
+      <div
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white h-16 flex items-center justify-around px-1"
+        style={{ borderTop: "1px solid rgba(0,0,0,0.1)" }}
+      >
         <Link to="/" className="flex flex-col items-center gap-[3px] flex-1 py-2">
           <div className="w-8 h-7 flex items-center justify-center">
             <Home size={18} strokeWidth={isActive("/") ? 2.2 : 1.8}
@@ -159,7 +165,6 @@ function Navbar() {
           {isActive("/") && <div className="w-4 h-[2.5px] bg-black rounded-full" />}
         </Link>
 
-        {/* Collection */}
         <Link to="/collection" className="flex flex-col items-center gap-[3px] flex-1 py-2">
           <div className="w-8 h-7 flex items-center justify-center">
             <Grid2X2 size={18} strokeWidth={isActive("/collection") ? 2.2 : 1.8}
@@ -169,7 +174,6 @@ function Navbar() {
           {isActive("/collection") && <div className="w-4 h-[2.5px] bg-black rounded-full" />}
         </Link>
 
-        {/* Cart — center, pill highlight */}
         <Link to="/shoping-cart" className="flex flex-col items-center gap-[3px] flex-1 py-2">
           <div className={`relative flex items-center justify-center h-7 px-3 rounded-lg transition-all ${isActive("/shoping-cart") ? "bg-black" : ""}`}>
             <ShoppingBag size={18} strokeWidth={1.8}
@@ -184,7 +188,6 @@ function Navbar() {
           {isActive("/shoping-cart") && <div className="w-4 h-[2.5px] bg-black rounded-full" />}
         </Link>
 
-        {/* Store */}
         <Link to="/store" className="flex flex-col items-center gap-[3px] flex-1 py-2">
           <div className="w-8 h-7 flex items-center justify-center">
             <Store size={18} strokeWidth={isActive("/store") ? 2.2 : 1.8}
@@ -194,7 +197,6 @@ function Navbar() {
           {isActive("/store") && <div className="w-4 h-[2.5px] bg-black rounded-full" />}
         </Link>
 
-        {/* Profile / Sign In */}
         {user ? (
           <Link to="/profile" className="flex flex-col items-center gap-[3px] flex-1 py-2">
             <div className="w-8 h-7 flex items-center justify-center">
@@ -219,5 +221,4 @@ function Navbar() {
     </>
   );
 }
-
 export default Navbar;

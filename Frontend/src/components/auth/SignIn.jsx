@@ -58,7 +58,7 @@ function SignIn() {
   return (
     <div className="h-[100dvh] overflow-hidden flex items-center justify-center bg-[#C4D96F] relative">
 
-      {/* 🔙 BACK BUTTON */}
+    
       <button
         onClick={() => navigate(-1)}
         className="absolute top-3 left-3 border-2 border-black bg-white p-2 shadow-md active:scale-95 z-10"
@@ -66,7 +66,6 @@ function SignIn() {
         <FiArrowLeft size={16} />
       </button>
 
-      {/* SCALE WRAPPER 👇 */}
       <div className="w-full max-w-md scale-[0.92] sm:scale-100 origin-center">
 
         {/* CARD */}
@@ -99,6 +98,7 @@ function SignIn() {
                 onChange={handleChange}
                 type="email"
                 required
+                placeholder="Enter your email"
               />
             </div>
 
@@ -116,6 +116,7 @@ function SignIn() {
                   type={showPassword ? "text" : "password"}
                   required
                   className="pr-14"
+                  placeholder="Enter your password"
                 />
 
                 <button
