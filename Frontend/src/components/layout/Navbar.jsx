@@ -19,7 +19,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
+// Handle user logout
   const handleLogout = async () => {
     try {
       setLoading(true);
