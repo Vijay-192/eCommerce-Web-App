@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"; // changse
 
 const productSchema = new mongoose.Schema(
   {

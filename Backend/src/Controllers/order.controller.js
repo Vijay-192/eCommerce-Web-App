@@ -1,6 +1,6 @@
 import razorpayInstance from "../Config/Razorpay.js";
-import { Order } from "../Models/Order.Model.js";
-import { Cart } from "../Models/Cart.Model.js";
+import { Order } from "../Models/order.model.js"; // changse
+import { Cart } from "../Models/cart.model.js";
 import crypto from "crypto";
 
 export const createOrder = async (req, res) => {
@@ -110,20 +110,20 @@ export const verifyPayment = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error });
     }
 };
- 
-export const getMyOrder = async(req,res)=>{
+
+export const getMyOrder = async (req, res) => {
     try {
         const userId = req.id
-        const orders = await Order.find({user:userId})
-        .populate({path:"products.productId",select:"productName productPrice productImg"})
-        .populate("user","firstName lastName email")
+        const orders = await Order.find({ user: userId })
+            .populate({ path: "products.productId", select: "productName productPrice productImg" })
+            .populate("user", "firstName lastName email")
 
         res.status(200).json({
-            success:true,
-            count:orders.length,
+            success: true,
+            count: orders.length,
             orders,
-            message:"Orders fetched successfully"
-        })  
+            message: "Orders fetched successfully"
+        })
     } catch (error) {
         console.error("Error in getOrder:", error);
         res.status(500).json({ message: "Internal server error", error });

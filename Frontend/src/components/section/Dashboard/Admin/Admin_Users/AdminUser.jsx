@@ -5,13 +5,13 @@ import { Search, Pencil, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/retroui/Button";
 import userAvatar from "@/assets/user.svg";
-
+import { API_URL_USER } from "@/api/api";
 function AdminUser() {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const API_BASE_URL = import.meta.env.VITE_API_URL_USER;
+
 
   const getAllUsers = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -19,7 +19,7 @@ function AdminUser() {
     try {
       setLoading(true);
 
-      const res = await axios.get(`${API_BASE_URL}/all-user`, {
+      const res = await axios.get(`${API_URL_USER}/all-user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

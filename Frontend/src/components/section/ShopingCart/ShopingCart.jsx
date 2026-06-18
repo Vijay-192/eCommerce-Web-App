@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setCart } from "@/redux/productSlice";
 import { toast } from "sonner";
-
+import { API_URL_CART } from "@/api/api";
 function ShopingCart() {
   const { cart } = useSelector(store => store.product);
   const navigate = useNavigate();
@@ -16,12 +16,11 @@ function ShopingCart() {
   const tax = sub_total * 0.05; // 5%
   const dispatch = useDispatch();
   const total = sub_total + shipping_price + tax;
-  const API = import.meta.env.VITE_API_URL_CART;
   const accessToken = localStorage.getItem("accessToken");
-  
+
   const loadCart = async () => {
     try {
-      const res = await axios.get(API, {
+      const res = await axios.get(API_URL_CART, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -29,7 +28,7 @@ function ShopingCart() {
       if (res.data.success) {
         dispatch(setCart(res.data.cart));
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const handleupdateQuantity = async (productId, type) => {
     try {
@@ -208,7 +207,7 @@ function ShopingCart() {
                 {/* place order */}
                 <div className="flex flex-col items-center gap-4 mt-6">
                   <Button
-                  onClick={()=>navigate("/address")}
+                    onClick={() => navigate("/address")}
                     className="w-full bg-orange-400 border-4 border-black 
     py-3 font-bold uppercase text-center
     transition-all duration-150 

@@ -4,11 +4,9 @@ import ProductCard from "./ProductCard";
 import { FiChevronDown } from "react-icons/fi";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { store } from "@/redux/store";
 import { setProducts } from "@/redux/productSlice";
-
+import { API_URL_PRODUCT } from "@/api/api";
 function Product() {
-  const API_BASE_URL = import.meta.env.VITE_API_URL_PRODUCT;
   const { products } = useSelector(store => store.product);
   const [allProducts, setAllProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -24,7 +22,7 @@ function Product() {
       SetLoading(true);
       const res = await axios.get(
         `
-        ${API_BASE_URL}/getallproducts
+        ${API_URL_PRODUCT}/getallproducts
         
         
         `

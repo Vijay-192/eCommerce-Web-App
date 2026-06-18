@@ -22,6 +22,8 @@ import ProtectedRoute from "./components/pages/ProtectedRoute";
 import SingleProduct from "./components/section/Product_Category_Collection/SingleProduct";
 import AddressForm from "./components/pages/AddressForm";
 import OrderSuccess from "./components/pages/OrderSuccess";
+import About from "./components/section/About/About";
+import Store from "./components/section/Stores/Store";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,24 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <Product />
+      </>
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <>
+        <Navbar />
+        <About />
+      </>
+    ),
+  },
+  {
+    path: "/store",
+    element: (
+      <>
+        <Navbar />
+        <Store />
       </>
     ),
   },

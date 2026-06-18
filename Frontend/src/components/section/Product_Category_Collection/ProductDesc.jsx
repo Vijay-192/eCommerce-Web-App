@@ -5,14 +5,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-
+import { API_URL_CART } from "@/api/api";
 function ProductDesc({ product }) {
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
-   const API_BASE_URL = import.meta.env.VITE_API_URL_CART;
 
   const formattedPrice = new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -29,7 +28,7 @@ function ProductDesc({ product }) {
       setLoading(true);
 
       const res = await axios.post(
-        `${API_BASE_URL}/add`,
+        `${API_URL_CART}/add`,
         { productId: product._id, quantity },
         {
           headers: {

@@ -1,11 +1,11 @@
-import { User } from "../Models/User.model.js";
+import { User } from "../Models/user.model.js";// changse
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { verifyEmail } from "../Services/Email/Verify.Email.js";
-import { Session } from "../Models/Session.model.js";
+import { Session } from "../Models/session.model.js";
 import { SendOTPmail } from "../Services/Email/Send.OTP.Mail.js";
 import cloudinary from "../Utils/cloudinary.js";
-
+// controller functions for user-related operations
 
 export const register = async (req, res) => {
   try {

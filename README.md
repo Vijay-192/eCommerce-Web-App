@@ -4,8 +4,6 @@ This project is a scalable E-Commerce backend system built to manage product sal
 
 The system is designed with scalability in mind, making it suitable for growing applications and real-world production use.
 
-
-
 ---
 
 
@@ -22,50 +20,6 @@ The system is designed with scalability in mind, making it suitable for growing 
 
 These features provide a complete and secure authentication workflow for modern backend applications.
 
-
-## 📁 Folder Structure
-
-```
-backend/
-│
-├── 📂 src/
-│   │
-│   ├── ⚙️ config/                # Configuration files (DB, Mail, ENV setup)
-│   │   ├── db.js
-│   │   └── mailer.js
-│   │
-│   ├── 🎮 controllers/           # Business logic & request handling
-│   │   └── auth.controller.js
-│   │
-│   ├── 🛡 middleware/            # Authentication, error handling, guards
-│   │   ├── auth.middleware.js
-│   │   └── error.middleware.js
-│   │
-│   ├── 🗄 models/                # Database schemas and models
-│   │   ├── User.model.js
-│   │   └── Otp.model.js
-│   │
-│   ├── 🛣 routes/                # API route definitions
-│   │   └── auth.routes.js
-│   │
-│   ├── 🧠 services/              # Core reusable logic (Mailer, OTP, Tokens)
-│   │   ├── mail.service.js
-│   │   ├── otp.service.js
-│   │   └── token.service.js
-│   │
-│   ├── 🧰 utils/                 # Helper and utility functions
-│   │   ├── hashPassword.js
-│   │   └── generateOTP.js
-│   │
-│   └── app.js                   # Express app configuration
-│
-├── 🚀 server.js                 # Entry point of the application
-├── 🔐 .env                      # Environment variables (ignored in Git)
-├── 🙈 .gitignore                # Files ignored by Git
-├── 🎨 .prettierrc               # Code formatting rules
-└── 📦 package.json              # Project metadata and dependencies
-```
----
 # 💻 Tech Stack & Services 
 
 

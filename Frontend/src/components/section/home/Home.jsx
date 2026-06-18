@@ -5,11 +5,11 @@ import Slider from './Slider'
 function Home() {
   return (
     <div>
-      <Hero/>
-   <Slider/>
+      <Hero />
+      <Slider />
 
-      <Feature/>
-      
+      <Feature />
+
 
     </div>
   )
